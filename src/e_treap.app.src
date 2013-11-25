@@ -1,0 +1,3 @@
+{application, e_treap, [
+    {vsn, "0.1"}
+]}.
