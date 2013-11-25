@@ -4,7 +4,8 @@
 
 -export([new/0,
 		 store/4, erase/2,
-		 extract_min/1, decrease_priority/3,
+		 extract_min/1,
+		 decrease_priority/3, decrease_priority/4,
 		 to_list/1, from_list/1,
 		 find/2, fetch/2]).
 
@@ -39,6 +40,14 @@ erase(S, {SH, PH, VH, TL, TR}) ->
 -spec extract_min(treap(S, P, V)) -> {S, P, V, treap(S, P, V)}.
 extract_min({S, P, V, TL, TR}) ->
 	{S, P, V, disjoint_union(TL, TR)}.
+
+-spec decrease_priority(S, P, V, treap(S, P, V)) -> treap(S, P, V).
+decrease_priority( S, P, V, {SH, PH, VH, TL, TR} ) ->
+	if
+		S  < SH -> rotate_r({SH, PH, VH, decrease_priority(S, P, V, TL), TR});
+		S  > SH -> rotate_l({SH, PH, VH, TL, decrease_priority(S, P, V, TR)});
+		P =< PH -> {S, P, V, TL, TR}
+	end.
 
 -spec decrease_priority(S, P, treap(S, P, V)) -> treap(S, P, V).
 decrease_priority(S, P, {SH, PH, VH, TL, TR}) ->
