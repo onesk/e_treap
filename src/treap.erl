@@ -42,7 +42,7 @@ extract_min({S, P, V, TL, TR}) ->
 	{S, P, V, disjoint_union(TL, TR)}.
 
 -spec decrease_priority(S, P, V, treap(S, P, V)) -> treap(S, P, V).
-decrease_priority( S, P, V, {SH, PH, VH, TL, TR} ) ->
+decrease_priority(S, P, V, {SH, PH, VH, TL, TR}) ->
 	if
 		S  < SH -> rotate_r({SH, PH, VH, decrease_priority(S, P, V, TL), TR});
 		S  > SH -> rotate_l({SH, PH, VH, TL, decrease_priority(S, P, V, TR)});
